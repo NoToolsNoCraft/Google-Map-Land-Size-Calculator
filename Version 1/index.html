@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map with Search, Undo, and Multiple Areas</title>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+        #controls {
+            margin-top: 10px;
+            text-align: center;
+        }
+        #area {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        #search-box {
+            width: 300px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <input id="search-box" type="text" placeholder="Enter a location">
+    <div id="map"></div>
+    <div id="controls">
+        <button id="undo">Undo</button>
+        <button id="clear-shape">Clear Shape</button>
+        <button id="toggle-exclusion">Switch to Exclusion Mode</button>
+        <div id="area">Area: </div>
+    </div>
+
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgt5s7d0SxpSDh5Oj1KFfADmm9PesdNF0&libraries=drawing,geometry,places"></script>
+    <!-- Main JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
