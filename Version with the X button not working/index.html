@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area Finder</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #map {
+            height: 500px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        #controls {
+            width: 100%;
+            max-width: 1000px;
+            text-align: center;
+            margin-top: 10px;
+            padding: 0 10px;
+        }
+
+        #controls input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .button {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .land-data {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-width: 1000px;
+            width: 100%;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .land-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+
+        .side-list {
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .separator {
+    border-top: 2px solid #000; /* Black line */
+    margin: 20px 0; /* Spacing above and below the separator */
+    padding: 10px 0; /* Padding within the separator */
+    text-align: center; /* Center text or content inside the separator */
+    font-weight: bold; /* Bold text for the label (optional) */
+}
+
+.separator::before {
+    content: "—"; /* Optional dash or symbol before the text */
+    font-size: 1.5em; /* Adjust the size of the dash or symbol */
+    color: #000; /* Color of the dash or symbol */
+}
+
+.land-box {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 1000px;
+    width: 100%;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.land-header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.land-details {
+    margin-left: 20px;
+}
+
+    </style>
+
+</head>
+<body>
+    <div id="map"></div>
+    <div id="controls">
+        <input id="search-box" type="text" placeholder="Search for an address">
+        <button id="clear-shape" class="button">Clear All Shapes</button>
+        <button id="undo" class="button">Undo</button>
+        <button id="toggle-exclusion" class="button">Switch to Exclusion Mode</button>
+        
+
+        <div id="area">Area: </div>
+        <div class="separator"></div>
+    </div>
+
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgt5s7d0SxpSDh5Oj1KFfADmm9PesdNF0&libraries=drawing,geometry,places"></script>
+    <!-- Main JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
