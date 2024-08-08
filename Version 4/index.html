@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area Finder</title>
+    <style>
+        body {
+    font-family: "Times New Roman", Times, serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Ensure the body takes full width */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.app-title {
+    background: linear-gradient(to right, #4CAF50, #FFEB3B); /* Green to Yellow gradient */
+    color: #fff; /* White text */
+    font-size: 24px;
+    font-weight: bold;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    max-width: 1000px;
+    box-sizing: border-box;
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 3px solid #000; /* Black border */
+    border-radius: 8px; /* Optional: rounded corners */
+    text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000; /* Black text shadow to create outline effect */
+}
+
+#map {
+    height: 50vh;
+    width: 100%;
+    max-width: 1000px;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+#controls {
+    width: 100%;
+    max-width: 1000px;
+    text-align: center;
+    margin-top: 10px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+#controls input[type="text"] {
+    width: calc(100% - 40px); /* Ensure input takes full available width */
+    max-width: 300px;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.button {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    width: calc(100% - 40px); /* Full width on mobile */
+    max-width: 300px;
+    box-sizing: border-box;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+#area {
+    font-size: 22px;
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 1000px;
+    width: 100%;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.land-data {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 1000px;
+    width: 100%;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.land-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.side-list {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.separator {
+    border-top: 2px solid #000; /* Black line */
+    margin: 20px 0; /* Spacing above and below the separator */
+    padding: 10px 0; /* Padding within the separator */
+    text-align: center; /* Center text or content inside the separator */
+    font-weight: bold; /* Bold text for the label (optional) */
+}
+
+.separator::before {
+    content: "—"; /* Optional dash or symbol before the text */
+    font-size: 1.5em; /* Adjust the size of the dash or symbol */
+    color: #000; /* Color of the dash or symbol */
+}
+
+.land-box {
+    font-size: 22px;
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 700px;
+    width: 100%;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.land-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.land-details {
+    margin-left: 10px;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .button {
+        width: calc(100% - 20px); /* Reduce padding for buttons on small screens */
+        max-width: none;
+    }
+
+    .land-header {
+        font-size: 22px;
+    }
+
+    .land-box {
+        font-size: 14px;
+    }
+
+    #controls input[type="text"] {
+        width: calc(100% - 20px); /* Ensure input takes full available width */
+        max-width: none;
+    }
+}
+
+    </style>
+
+</head>
+<body>
+    <div class="app-title">Area Marker Measur</div>
+    <div id="map"></div>
+    <div id="controls">
+        <input id="search-box" type="text" placeholder="Search for an address">
+        <button id="clear-shape" class="button">Clear All Shapes</button>
+        <button id="undo" class="button">Undo</button>
+        <button id="toggle-exclusion" class="button">Switch to Exclusion Mode</button>
+        
+
+        <div id="area">Area: </div>
+        <div class="separator"></div>
+    </div>
+ <!-- Guide for Users -->
+ <div class="land-box">
+    <div class="land-header">How to Use the Area Finder Application</div>
+    <div class="land-details">
+        <p><strong>Overview:</strong> The Area Finder application allows users to locate and measure areas on Google Maps. You can mark land areas, calculate their sizes in square meters and hectares, and adjust the measurements with exclusions if needed.</p>
+        <ol>
+            <li><strong>Search for a Location:</strong>
+                <ul>
+                    <li>Use the search box at the top of the app to find a specific location. Enter an address or place name, and the map will automatically zoom to the specified area.</li>
+                </ul>
+            </li>
+            <li><strong>Draw a Land Area:</strong>
+                <ul>
+                    <li>Click on the map where you want to start drawing your land area.</li>
+                    <li>Use the drawing tools to create a polygon that outlines the area you wish to measure.</li>
+                    <li>The polygon can be adjusted by clicking and dragging its edges or corners.</li>
+                </ul>
+            </li>
+            <li><strong>Calculate Area:</strong>
+                <ul>
+                    <li>Once you've drawn a polygon, the application will automatically calculate the area inside it.</li>
+                    <li>The area is displayed at the bottom of the map in both square meters (m²) and hectares (ha).</li>
+                </ul>
+            </li>
+            <li><strong>Use Exclusion Mode:</strong>
+                <ul>
+                    <li>You can switch to Exclusion Mode by clicking the "Switch to Exclusion Mode" button.</li>
+                    <li>This mode allows you to draw exclusion areas within your land, subtracting them from the total area.</li>
+                </ul>
+            </li>
+            <li><strong>Manage Overlays:</strong>
+                <ul>
+                    <li>To remove a shape, click the "Clear All Shapes" button to remove all drawings from the map.</li>
+                    <li>Use the "Undo" button to remove the last vertex added to the current polygon.</li>
+                </ul>
+            </li>
+            <li><strong>View Detailed Information:</strong>
+                <ul>
+                    <li>Detailed information about the land area, including side lengths and exclusions, is displayed below the map.</li>
+                    <li>You can click "Show/Hide Side Lengths" to see the lengths of each side of your polygon.</li>
+                </ul>
+            </li>
+            <li><strong>Delete Specific Areas:</strong>
+                <ul>
+                    <li>Click the red "X" button next to a land or exclusion entry in the list to remove it from the map and the calculation.</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+</div>
+
+</div>
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC84bwUKyNCKTHUu8JI-lHO5zpFE3ORYEM&libraries=drawing,geometry,places"></script>
+    <!-- Main JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
